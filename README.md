@@ -1,6 +1,32 @@
 # Ahrefování
 Přehled věcí, co jsme zatím probírali (a občas něco navíc).
 
+- [Ahrefování](#ahrefování)
+  - [Obecně](#obecně)
+  - [HTML](#html)
+    - [Základní pravidla](#základní-pravidla)
+    - [Základní struktura](#základní-struktura)
+      - [Odsazení (indentation)](#odsazení-indentation)
+    - [Tagy](#tagy)
+      - [Strukturní](#strukturní)
+      - [Metadata](#metadata)
+      - [Obsahové - blokové](#obsahové---blokové)
+      - [Obsahové - inline](#obsahové---inline)
+      - [Multimédia](#multimédia)
+      - [Tabulky](#tabulky)
+      - [Formuláře](#formuláře)
+    - [Atributy](#atributy)
+  - [CSS](#css)
+  - [JavaScript](#javascript)
+  - [Programy a nástroje](#programy-a-nástroje)
+    - [DevTools (F12 v prohlížeči)](#devtools-f12-v-prohlížeči)
+    - [Visual Studio Code (VSCode)](#visual-studio-code-vscode)
+    - [Git](#git)
+      - [Základní git flow](#základní-git-flow)
+    - [node.js](#nodejs)
+      - [NPM](#npm)
+    - [ESLint](#eslint)
+
 ## Obecně
 Webové programovaní se dnes prakticky odehrává ve třech různých jazycích. Každý má svůj účel:
 
@@ -21,6 +47,7 @@ Webové programovaní se dnes prakticky odehrává ve třech různých jazycích
 - **JavaScript** (JS, soubory s příponou `.js`). je _programovací jazyk_. Umí stejné věci, co jiné programovaci jazyky - matematiku, práci s daty... Speciální je v tom, že je zabudovaný přímo do webových prohlížečů a můžeme s ním tak přistupovat k DOM a ovládat ho - JavaScript **oživuje webové stránky**.
   - JavaScript je **imperativní** - to znamená, že v něm píšeme sérii příkazů, které pak prohlížeč odshora dolů chroustá a provádí je. Příkaz vypadá třeba takhle: `const x = 2;`
   - Pozor, existuje i pořád celkem používaný jazyk Java, ale ten s JavaScriptem vůbec nesouvisí! JavaScript se původně jmenoval LiveScript, ale jeho tvůrci se v 90. letech rozhodli, že ho přejmenují podle tehdy masově populární Javy, což mělo k JavaScriptu nalákat programátory.
+- Jedna z nejdůležitějších schopností při programování je orientace v dokumentaci. Všechny tři jazyky detailně dokumentuje web **[MDN (Mozilla Developer Network)](https://developer.mozilla.org/en-US/docs/Web)**. Ostatní zdroje (třeba W3Schools, které bývají první ve výsledcích na Googlu) jsou občas přívětivější, ale často nepřesné nebo zastaralé.
 
 ## HTML
 Historie HTML byla plná mrzení, kdy se nikdo nemohl dohodnout, k čemu HTML vlastně bude, a každý prohlížeč si je zobrazoval jinak, ale na dnes aktuální verzi <b>HTML5</b> z roku 2014 je shoda a podoba HTML se tak naštěstí ustálila. Má i vlastní ošklivé logo:
@@ -28,7 +55,7 @@ Historie HTML byla plná mrzení, kdy se nikdo nemohl dohodnout, k čemu HTML vl
 ![](img/html5logo.png)
 ### Základní pravidla
 - Dokument má **stromovou strukturu**: i pokud bychom zmatlali HTML kód, třeba zapomenutím koncového tagu, a strom by byl rozbitý, prohlížeč ho při tvorbě DOM opraví.
-- Dokument píšeme tak, že jeho obsah obalujeme do sémantických **tagů**. Tagy jsou buď párové, nebo nepárové, a můžou mít **atributy**, které definují další vlastnosti - třeba unikátní ID prvku (to se používá hlavně v JavaScriptu), třídu (ta zase v CSS) nebo nutný doplněk tagu, třeba adresu obrázku pro tag `<img>`.
+- Dokument píšeme tak, že jeho obsah obalujeme do sémantických **tagů**. Tagy jsou buď párové, nebo nepárové, a můžou mít **atributy**, které definují další vlastnosti - třeba unikátní ID prvku (to se používá hlavně v JavaScriptu), třídu (ta zase v CSS) nebo nutný doplněk tagu, třeba adresu obrázku pro tag `<img>`. **Hodnota** atributu je vždy ve dvojitých uvozovkách.
 - Takhle takový tag s atributy vypadá:
   `<img id="main-image" class="full-width" src="img/hlavni.jpg">`
 - Do HTML můžu psát taky **komentáře**. Prohlížeč je při sestavování DOM bude ignorovat, takže si do nich můžu psát libovolné poznámky. Můžou být na víc řádků a uvozují se takhle:
@@ -62,12 +89,104 @@ Takhle vypadá základní HTML kostra (včetně tagů pro vložení stylu a skri
 
 Postupně:
 - `<!DOCTYPE html>` je _deklarace_ typu dokumentu. Musí být na začátku každého HTML souboru. Říkáme s ní prohlížeči, že **používáme HTML5**. Bez deklarace si prohlížeč může vytvořit DOM všelijak, většinou špatně.
-- Párový `<html>` uvozuje obsah samotného dokumentu.
+- Párový `<html>` uvozuje celý dokument.
 - Párový `<head>` uvozuje doplňující informace o dokumentu - nejsou vidět na samotné stránce.
-- `<meta charset="utf-8">` 
+- `<meta charset="utf-8">` je další povinný tag. Říká, že dokument používá univerzální znakovou sadu UTF-8, což znamená, že můžeme bezpečně používat české znaky nebo třeba emoji.
+- Párový `<title>` uvozuje název stránky, který je v prohlížeči vidět v horní liště jako název tabu.
+- `<link>` je tag pro vkládání _externích zdrojů_. Můžou to být třeba písma nebo náhledové ikonky, v našem případě to ale bude CSS soubor (to určuje atribut `rel` - _relationship_). Umístění ve složce se zadává do atributu `href`.
+- Párový `<body>` uvozuje obsah dokumentu - to, co je vidět na stránce.
+- Párový `<p>` (**paragraph**) je jeden ze základních obsahových tagů, uvozuje odstavec. 
+- `<script>`se používá na vkládání JS (atribut `src` určuje umístění ve složce). Takhle použitý je sice prázdný, ale musí být párový. `<script>` patří tradičně vždy **na konec** `<body>` - je to proto, že se v něm manipuluje s DOM a prohlížeč ho tak musí "přečíst" až na konec, když je zbytek DOM vytvořený. (Existuje několik modernějších způsobů, jak toho docílit, ale tenhle je jednoduchý a funguje.)
 
 #### Odsazení (indentation)
 V HTML (ale i v CSS a JS) je počítači jedno, jak budou jednotlivé řádky odsazené - celý kód by klidně mohl být na jednom řádku. Správné odsazení je nutné kvůli čitelnosti! U HTML je navíc logické, protože kopíruje stromovou strukturu DOM. `Shift+Alt+F` ve VSCode odsadí kód automaticky.
+
+### Tagy
+Tagů je spousta (něco přes stovku), tady je přehled nejdůležitějších. Celý seznam je na [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element). (U **nepárových** tagů je upozornění, zbytek je párový.)
+
+#### Strukturní
+`<html>`, `<head>` a `<body>` - všechny párové a popsané výš.
+#### Metadata
+Píšou se do `<head>` a všechny jsou popsané výš: `<meta>`, `<title>`, `<link>` a `<style>`.
+
+#### Obsahové - blokové
+Píšou se do `<body>` a označují nebo oddělují **bloky** obsahu. "Blok" v praxi znamená, že se obsah blokových tagů odskočí na nový řádek. (Zajišťuje to výchozí CSS pravidlo `display: block;`).
+- `<div>` (_division_) je **neutrální blokový tag**. Používá se, když se nehodí nic jiného, a prohlížeče mu kromě zmíněného `display: block;` nepřiřazují žádný výchozí styl.
+- `<p>` (_paragraph_) značí **odstavec textu**. Zatímco `<div>` může obsahovat cokoliv - obrázky, tabulky, formuláře, další `<div>` - `<p>` se používá čistě pro text.
+- `<hr>` (původně _horizontal rule_, nepárový) značí **tématický předěl**. Prohlížeče tagu z historických důvodů přiřazují vodorovnou čáru, ale jako všude platí, že se na to nemůžeme spolehnout a tag má čistě sémantický význam, který musíme doplnit CSS.
+- `<ul>` a `<ol>` (_un/ordered list_) uvozují **seznamy** - ty v `<ol>` jsou typicky číslované. **Položky** v seznamu se uvozují párovým `<li>`.
+
+#### Obsahové - inline
+Píšou se do `<body>` a označují vlastnosti částí textu v bloku. V praxi zůstane text označený inline tagem na stejném řádku jako obsah před ním - tagy mají výchozí CSS pravidlo `display: inline;`.
+- `<span>` je **neutrální inline tag**. Je to inline obdoba `<div>` - používá se, když se nehodí nic jiného, třeba když chci nějakému úseku textu přidat třídu.
+- `<a>` (_anchor_) je **odkaz**. Má povinný atribut `href`, který určuje, kam odkaz povede.
+- `<br>` (_break_, nepárový) značí **konec řádku**. Častá chyba je používat jedno nebo několik `<br>` za sebou na "odražení" odstavce od předchozího - odstavce mají správně být obaleny tagem `<p>`, kterému můžeme přiřadit CSS pravidlo `margin-bottom`.
+- `<b>` (původně _bold_) a `<strong>` označují **výrazný text**. Sémanticky je mezi nimi rozdíl (viz [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/strong#%3Cb%3E_vs._%3Cstrong%3E)), ale v praxi se docela zaměňují. Prohlížeče jejich obsah defaultně ztučňují (`font-weight: bold;`).
+- `<em>` (_emphasis_) a `<i>` (_idiomatic_, původně _italics_) značí **zdůrazněný text**. Výchozí styl obou tagů je kurzíva (`font-style: italic;`), ale stejně jako u `<b>`/`<strong>` platí, že je mezi nimi sémantický rozdíl (viz [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/em#%3Ci%3E_vs._%3Cem%3E)) a CSS pravidla bychom jim měli nastavit sami.
+
+#### Multimédia
+- `<img>` (_image_m nepárový) vkládá obrázek. Má povinný atribut `src`, který určuje umístění obrázku, a neměl by chybět ani atribut `alt` - popisek toho, co na obrázku je, třeba pro čtečky.
+- Existují taky nepárové tagy `<audio>` a `<video>`, kterými prohlížeče automaticky opatří vložený obsah audio/video přehrávačem. Dokumentace je na [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element#image_and_multimedia).
+
+#### Tabulky
+Nejjednodušší je ukázat tabulkové tagy v praxi. Kód:
+
+```
+<table>
+  <thead>
+    <tr>
+      <td>Jméno</td>
+      <td>Příjmení</td>
+      <td>Počet bodů</td>
+    </tr>
+  </thead>
+    <thead>
+    <tr>
+      <td>Jana</td>
+      <td>Nováková</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>Dana</td>
+      <td>Horáková</td>
+      <td>12</td>
+    </tr>
+  </thead>
+</table>
+```
+
+se defaultně zobrazí jako:
+
+<table>
+  <thead>
+    <tr>
+      <td>Jméno</td>
+      <td>Příjmení</td>
+      <td>Počet bodů</td>
+    </tr>
+  </thead>
+    <thead>
+    <tr>
+      <td>Jana</td>
+      <td>Nováková</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>Dana</td>
+      <td>Horáková</td>
+      <td>12</td>
+    </tr>
+  </thead>
+</table>
+
+#### Formuláře
+Formulářových prvků je v HTML [spousta](https://developer.mozilla.org/en-US/docs/Web/HTML/Element#forms), my jsme zatím používali dva nejdůležitější.
+
+- `<button>` 
+  <button>Defaultní tlačíko</button>
+- `<input>`
+
+### Atributy
 
 ## CSS
 
