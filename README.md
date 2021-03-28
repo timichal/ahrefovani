@@ -113,6 +113,7 @@ Píšou se do `<head>` a všechny jsou popsané výš: `<meta>`, `<title>`, `<li
 Píšou se do `<body>` a označují nebo oddělují **bloky** obsahu. "Blok" v praxi znamená, že se obsah blokových tagů odskočí na nový řádek. (Zajišťuje to výchozí CSS pravidlo `display: block;`).
 - `<div>` (_division_) je **neutrální blokový tag**. Používá se, když se nehodí nic jiného, a prohlížeče mu kromě zmíněného `display: block;` nepřiřazují žádný výchozí styl.
 - `<p>` (_paragraph_) značí **odstavec textu**. Zatímco `<div>` může obsahovat cokoliv - obrázky, tabulky, formuláře, další `<div>` - `<p>` se používá čistě pro text.
+- `<h1>` až `<h6>` (_heading_) uvozují **nadpisy**. Měly by odrážet stromovou strukturu dokumentu: `<h1>` je nadpis na nejvyšší úrovni - začíná se s ním a ve výchozím CSS je mu přiděleno největší písmo - `<h6>` na nejnižší.
 - `<hr>` (původně _horizontal rule_, nepárový) značí **tématický předěl**. Prohlížeče tagu z historických důvodů přiřazují vodorovnou čáru, ale jako všude platí, že se na to nemůžeme spolehnout a tag má čistě sémantický význam, který musíme doplnit CSS.
 - `<ul>` a `<ol>` (_un/ordered list_) uvozují **seznamy** - ty v `<ol>` jsou typicky číslované. **Položky** v seznamu se uvozují párovým `<li>`.
 
@@ -125,11 +126,11 @@ Píšou se do `<body>` a označují vlastnosti částí textu v bloku. V praxi z
 - `<em>` (_emphasis_) a `<i>` (_idiomatic_, původně _italics_) značí **zdůrazněný text**. Výchozí styl obou tagů je kurzíva (`font-style: italic;`), ale stejně jako u `<b>`/`<strong>` platí, že je mezi nimi sémantický rozdíl (viz [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/em#%3Ci%3E_vs._%3Cem%3E)) a CSS pravidla bychom jim měli nastavit sami.
 
 #### Multimédia
-- `<img>` (_image_m nepárový) vkládá obrázek. Má povinný atribut `src`, který určuje umístění obrázku, a neměl by chybět ani atribut `alt` - popisek toho, co na obrázku je, třeba pro čtečky.
+- `<img>` (_image_, nepárový) vkládá obrázek. Má povinný atribut `src`, který určuje umístění obrázku, a neměl by chybět ani atribut `alt` - popisek toho, co na obrázku je, třeba pro čtečky.
 - Existují taky nepárové tagy `<audio>` a `<video>`, kterými prohlížeče automaticky opatří vložený obsah audio/video přehrávačem. Dokumentace je na [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element#image_and_multimedia).
 
 #### Tabulky
-Nejjednodušší je ukázat tabulkové tagy v praxi. Kód:
+Nejjednodušší je ukázat základní tabulkové tagy v praxi. Kód:
 
 ```
 <table>
@@ -181,12 +182,20 @@ se defaultně zobrazí jako:
 
 #### Formuláře
 Formulářových prvků je v HTML [spousta](https://developer.mozilla.org/en-US/docs/Web/HTML/Element#forms), my jsme zatím používali dva nejdůležitější.
-
 - `<button>` 
   <button>Defaultní tlačíko</button>
-- `<input>`
+- `<input>` (nepárový) je pole pro vkládání obsahu. Má atribut [type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types) - nejčastěji `text` nebo `number` - a pár dalších, z nichž se nejvíc hodí `placeholder` (text, který zmizí po kliknutí do inputu) a `value` (výchozí hodnota), pro typ `number` potom `min`, `max` a `step`.
+  Tag `<input type="number" placeholder="Vložte číslo" min="0" max="100" step="2">` se defaultně zobrazí takhle (je vidět, že je pole malé a chtělo by to nastavit mu aspoň CSS pravidlo `width`):
+  <input type="number" placeholder="Vložte číslo" min="0" max="100" step="2">
 
 ### Atributy
+Existuje několik **globálních atributů** - těch, které je možné přidat k jakémukoliv tagu. Zdaleka nejdůležitější jsou dva:
+- `class` určuje **třídu** prvku. Pomocí tříd pak nejčastěji vybírám prvky v CSS. Stejnou třídu můžu použít pro víc prvků. Když chci, aby měl prvek víc tříd, píšu je za sebe s mezerou: `<p class="bold red underlined">`.
+- `id` je **unikátní identifikátor** prvku. Používám ho nejčastěji pro výběr prvku v JS. 
+
+Názvy tříd i ID se tradičně píšou malými písmeny a [kebab-case](https://www.theserverside.com/definition/Kebab-case): `my-awesome-class`.
+
+<!-- todo Jednotlivé atributy -->
 
 ## CSS
 
