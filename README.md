@@ -109,7 +109,7 @@ Postupně:
 - `<script>`se používá na vkládání JS (atribut `src` určuje umístění ve složce). Takhle použitý je sice prázdný, ale musí být párový. `<script>` patří tradičně vždy **na konec** `<body>` - je to proto, že se v něm manipuluje s DOM a prohlížeč ho tak musí "přečíst" až na konec, když je zbytek DOM vytvořený. (Existuje několik modernějších způsobů, jak toho docílit, ale tenhle je jednoduchý a funguje.)
 
 #### Odsazení (indentation)
-V HTML (ale i v CSS a JS) je počítači jedno, jak budou jednotlivé řádky odsazené - celý kód by klidně mohl být na jednom řádku. Správné odsazení je nutné kvůli čitelnosti! U HTML je navíc logické, protože kopíruje stromovou strukturu DOM. `Shift+Alt+F` ve VSCode odsadí kód automaticky.
+V HTML (ale i v CSS a JS) je počítači jedno, jak budou jednotlivé řádky odsazené - celý kód by klidně mohl být na jednom řádku. Správné odsazení je nutné kvůli čitelnosti! U HTML je navíc logické, protože kopíruje stromovou strukturu DOM. `Alt+Shift+F` ve VSCode odsadí kód automaticky.
 
 ### Tagy
 Tagů je spousta (něco přes stovku), tady je přehled nejdůležitějších. Celý seznam je na [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element). (U **nepárových** tagů je upozornění, zbytek je párový.)
@@ -136,7 +136,7 @@ Píšou se do `<body>` a označují vlastnosti částí textu v bloku. V praxi z
 - `<em>` (_emphasis_) a `<i>` (_idiomatic_, původně _italics_) značí **zdůrazněný text**. Výchozí styl obou tagů je kurzíva (`font-style: italic;`), ale stejně jako u `<b>`/`<strong>` platí, že je mezi nimi sémantický rozdíl (viz [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/em#%3Ci%3E_vs._%3Cem%3E)) a CSS pravidla bychom jim měli nastavit sami.
 
 #### Multimédia
-- `<img>` (_image_, nepárový) vkládá obrázek. Má povinný atribut `src`, který určuje umístění obrázku, a neměl by chybět ani atribut `alt` - popisek toho, co na obrázku je, třeba pro čtečky.
+- `<img>` (_image_, nepárový) vkládá <b>obrázek</b>. Má povinný atribut `src`, který určuje umístění obrázku, a neměl by chybět ani atribut `alt` - popisek toho, co na obrázku je, třeba pro čtečky.
 - Existují taky nepárové tagy `<audio>` a `<video>`, kterými prohlížeče automaticky opatří vložený obsah audio/video přehrávačem. Dokumentace je na [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element#image_and_multimedia).
 
 #### Tabulky
@@ -192,7 +192,7 @@ se defaultně zobrazí jako:
 
 #### Formuláře
 Formulářových prvků je v HTML [spousta](https://developer.mozilla.org/en-US/docs/Web/HTML/Element#forms), my jsme zatím používali dva nejdůležitější.
-- `<button>` 
+- `<button>`, tlačítko.
   <button>Defaultní tlačíko</button>
 - `<input>` (nepárový) je pole pro vkládání obsahu. Má atribut [type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types) - nejčastěji `text` nebo `number` - a pár dalších, z nichž se nejvíc hodí `placeholder` (text, který zmizí po kliknutí do inputu) a `value` (výchozí hodnota), pro typ `number` potom `min`, `max` a `step`.
   Tag `<input type="number" placeholder="Vložte číslo" min="0" max="100" step="2">` se defaultně zobrazí takhle (je vidět, že je pole malé a chtělo by to nastavit mu aspoň CSS pravidlo `width`):
