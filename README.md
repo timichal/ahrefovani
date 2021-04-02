@@ -17,6 +17,16 @@ Přehled věcí, co jsme zatím probírali (a občas něco navíc).
       - [Formuláře](#formuláře)
     - [Atributy](#atributy)
   - [CSS](#css)
+    - [Základní pravidla](#základní-pravidla-1)
+    - [Prakticky](#prakticky)
+    - [Vkládání CSS do HTML](#vkládání-css-do-html)
+    - [Selektory](#selektory)
+    - [Vlastnosti](#vlastnosti)
+      - [Písmo](#písmo)
+      - [Barvy](#barvy)
+      - [Mezery](#mezery)
+      - [Rámečky](#rámečky)
+      - [Zobrazení a rozměry](#zobrazení-a-rozměry)
   - [JavaScript](#javascript)
   - [Programy a nástroje](#programy-a-nástroje)
     - [DevTools (F12 v prohlížeči)](#devtools-f12-v-prohlížeči)
@@ -90,7 +100,7 @@ Takhle vypadá základní HTML kostra (včetně tagů pro vložení stylu a skri
 Postupně:
 - `<!DOCTYPE html>` je _deklarace_ typu dokumentu. Musí být na začátku každého HTML souboru. Říkáme s ní prohlížeči, že **používáme HTML5**. Bez deklarace si prohlížeč může vytvořit DOM všelijak, většinou špatně.
 - Párový `<html>` uvozuje celý dokument.
-- Párový `<head>` uvozuje doplňující informace o dokumentu - nejsou vidět na samotné stránce.
+- Párový `<head>` uvozuje "hlavičku", doplňující informace o dokumentu - nejsou vidět na samotné stránce.
 - `<meta charset="utf-8">` je další povinný tag. Říká, že dokument používá univerzální znakovou sadu UTF-8, což znamená, že můžeme bezpečně používat české znaky nebo třeba emoji.
 - Párový `<title>` uvozuje název stránky, který je v prohlížeči vidět v horní liště jako název tabu.
 - `<link>` je tag pro vkládání _externích zdrojů_. Můžou to být třeba písma nebo náhledové ikonky, v našem případě to ale bude CSS soubor (to určuje atribut `rel` - _relationship_). Umístění ve složce se zadává do atributu `href`.
@@ -107,7 +117,7 @@ Tagů je spousta (něco přes stovku), tady je přehled nejdůležitějších. C
 #### Strukturní
 `<html>`, `<head>` a `<body>` - všechny párové a popsané výš.
 #### Metadata
-Píšou se do `<head>` a všechny jsou popsané výš: `<meta>`, `<title>`, `<link>` a `<style>`.
+Píšou se do `<head>` a skoro všechny jsou popsané výš: `<meta>`, `<title>`, `<link>` a `<style>`. (Do toho posledního se píšou CSS pravidla, pokud je nechci mít ve zvláštním souboru.)
 
 #### Obsahové - blokové
 Píšou se do `<body>` a označují nebo oddělují **bloky** obsahu. "Blok" v praxi znamená, že se obsah blokových tagů odskočí na nový řádek. (Zajišťuje to výchozí CSS pravidlo `display: block;`).
@@ -191,13 +201,135 @@ Formulářových prvků je v HTML [spousta](https://developer.mozilla.org/en-US/
 ### Atributy
 Existuje několik **globálních atributů** - těch, které je možné přidat k jakémukoliv tagu. Zdaleka nejdůležitější jsou dva:
 - `class` určuje **třídu** prvku. Pomocí tříd pak nejčastěji vybírám prvky v CSS. Stejnou třídu můžu použít pro víc prvků. Když chci, aby měl prvek víc tříd, píšu je za sebe s mezerou: `<p class="bold red underlined">`.
-- `id` je **unikátní identifikátor** prvku. Používám ho nejčastěji pro výběr prvku v JS. 
+- `id` je **unikátní identifikátor** prvku. Používám ho nejčastěji pro výběr prvku v JS. Žádné dva prvky nesmí mít stejné ID (jinak JS nebude správně fungovat).
 
 Názvy tříd i ID se tradičně píšou malými písmeny a [kebab-case](https://www.theserverside.com/definition/Kebab-case): `my-awesome-class`.
 
-<!-- todo Jednotlivé atributy -->
+Některé tagy mají taky speciální atributy, které se s nimi dobrovolně nebo povinně používají. Třeba tag `<img>` musí mít povinně atribut `src`, který říká, kde je daný obrázek umístěný.
 
 ## CSS
+CSS mělo podobně jako HTML komplikovanou historii, než došlo do dnešní víceméně stabilní podoby. Poslední číslovaná verze je **CSS3**, ale protože se do CSS plynule přidávají nové věci, dnes už se neverzuje.
+
+### Základní pravidla
+- CSS popisuje **vzhled HTML dokumentu** a skládá se z **pravidel**.
+- Prohlížeče v sobě obsahují nějaká základní **výchozí pravidla**, takže dokument má základní formátování, i pokud žádné CSS nedefinujeme. Například výchozí pravidlo pro `<b>` je tučné písmo. Výchozí pravidla ale můžeme s CSS přepsat.
+- Pravidla jsou **kaskádová**. To znamená, že ve stromu dokumentu "tečou" z nadřazených prvků k podřazeným. Když nastavím třeba nějakému prvku `<div>` s mnoha podřazenými `<p>` velké písmo, budou mít velké písmo i všechny `<p>`.
+- Prvky dokumentu můžu vybírat spoustou způsobů pomocí takzvaných **selektorů**. Selektor vybírá všechny příslušné prvky. Selektorem může být samotný **tag**. Například selektor `p` vybere všechny prvky s tagem `<p>`.
+- Nejčastěji je ale selektorem **třída**, kterou prvku přiřadím v HTML. Selektor třídy začíná tečkou: třeba `.my-awesome-class`, který vybere všechny prvky s touhle třídou: `<p class="my-awesome-class">`, `<h1 class="my-awesome-class">`...
+- K selektorům píšeme bloky **vlastností s hodnotami**, které tím dáváme daným prvkům. (Bloky jsou části kódu ohraničené "chlupatými závorkami" `{}` - jako v JavaScriptu.) Vlastnosti se píšou jako `vlastnost: hodnota;`, s dvojtečkou a středníkem na konci.
+- Pravidlo se tak skládá ze selektoru a bloku vlastností.
+- I v CSS se můžou psát **komentáře**, takhle: `/* komentář */`. Ve VSCode můžu vložit komentářové znaky přes `Alt+Shift+A`.
+
+
+### Prakticky
+HTML kód
+```
+<div>
+  <p>
+    Kus tohohle textu bude <b>zvýrazněný</b>! Kus zase <span class="small">malý</span>.
+  </p>
+  <p class="small">
+    Tenhle text bude malý.
+  </p>
+</div>
+```
+
+můžeme opatřit tímhle CSS:
+
+```
+div {
+  font-family: Courier;
+}
+
+b {
+  font-size: large;
+}
+
+.small {
+  font-size: small;
+}
+```
+
+Říkáme jím:
+- Všechny prvky `<div>` (a tedy i všechny podřazené prvky - CSS je **kaskádové**) budou mít písmo Courier.
+- Všechny prvky `<b>` budou mít větší písmo.
+- Všechny prvky s třídou `small` budou mít o něco menší písmo. (V našem případě to bude `<span>` v prvním odstavci a celý druhý odstavec.)
+
+Zobrazení bude takovéhle (`<b>` má navíc výchozí styl - tučné písmo.)
+
+<p style="font-family: Courier;">
+  Kus tohohle textu bude <b style="font-size: large;">zvýrazněný</b>! Kus zase <span style="font-size: small;">malý</span>.
+</p>
+<p style="font-family: Courier; font-size: small">
+  Tenhle text bude malý.
+</p>
+
+### Vkládání CSS do HTML
+CSS můžeme s HTML použít třemi způsoby:
+- Ze samostatného souboru přes tag `<link>` v hlavičce. Je to nejlepší způsob organizace, protože drží různé jazyky odděleně. (Tomu se v programování říká **separation of concerns**.)
+`<link rel="stylesheet" href="style.css">`
+- Přímo v tagu `<style>` v hlavičce. Hodi se to jen u miniaturních dokumentů, kde jsou potřeba dvě tři pravidla.
+  ```
+  <style>
+    p {
+      font-weight: bold;
+    }
+  </style>
+  ```
+- Styly můžu psát i přímo do atributu `style` k jednotlivým tagům (bez selektorů - platí pak jen pro daný prvek), ale je to ošklivé, nesystematické a tady jen pro úplnost.
+`<p style="font-weight: bold;">`
+
+### Selektory
+Základní typy selektorů jsou **tag** (`p`) a **třída** (s hvězdičkou, `.my-awesome-class`). Když chci, aby pravidlo platilo pro víc selektorů, odděluju je čárkou (`.my-awesome-class, .another-class`). Úplný přehled selektorů je na [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors).
+
+### Vlastnosti
+Vlastností je v CSS asi 200 (záleží na způsobu počítání). Tady je pár základních (celý přehled na [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)):
+
+VSCode vlastnosti i hodnoty v CSS souborech sám našeptává.
+
+#### Písmo
+- `font-size`: velikost písma, nejčastěji v pixelech. Výchozí velikost písma v prohlížečích je většinou 16 pixelů: `font-size: 16px;`
+- `font-weight`: tučnost písma. Základní hodnoty jsou `lighter`, `normal`, `bold`, `bolder`. Tag `<b>` má výchozí styl `font-weight: bold;`
+- `font-family`: font, třeba `font-family: Courier;`. Je dobré používat nějaký základní - uživatel ho musí mít nainstalovaný, jinak uvidí výchozí font.
+- <u>podtržené písmo</u> je `text-decoration: underline;`, <i>kurzíva</i> `font-style: italic`. Text můžu zobrazit <span style="text-transform: uppercase">velkými písmeny</span> pomocí `text-transform: uppercase`.
+
+#### Barvy
+Hodnotu barvy můžu zadávat několika způsoby - nejčastěji některým ze [zabudovaných názvů](https://htmlcolorcodes.com/color-names/) (`red`, `darkolivegreen`...) nebo RGB kódem (`#C0C0C0`, RGB kod z palety můžu získat [třeba tady](https://www.rapidtables.com/web/color/RGB_Color.html) a umí to i VSCode).
+- `color`: barva textu. <span style="color: darkmagenta;">Tenhle text má `color: darkmagenta;`.</span>
+- `background-color`: barva pozadí. <span style="background-color: yellow;">Tenhle text má `background-color: yellow;`.</span>
+
+#### Mezery
+Existují dva typy pravidel pro mezery: **padding** (vnitřní výplň) a **margin** (vnější mezera). Takhle:
+
+<div style="background-color: yellow; padding: 20px">Tenhle prvek má nastavený 20pixelový <b>padding</b>.</div>
+
+<div style="background-color: yellow; margin: 20px">Tenhle prvek má nastavený 20pixelový <b>margin</b>.</div>
+
+Margin a padding můžu psát několika způsoby (vše s `padding` platí i pro `margin`):
+- `padding: 10px` nastaví 10px ve všech čtyřech směrech.
+- Jednotlivé směry můžu definovat jednotlivě: `padding-top` `padding-right` `padding-bottom` `padding-left`.
+- Všechny směry taky můžu napsat do jediného pravidla `padding`. Jdou pak tak jako v předchozím bodě - **po směru hodinových ručiček**: `padding: 10px 20px 15px 25px;` je totéž jako 
+  ```
+  {
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+  }
+  ```
+
+#### Rámečky
+Rámečky se definují pravidlem `border`, hodnota jde v pořadí tloušťka - typ - barva. Následující odstavec má nastaveno `border: 3px dotted green;`
+
+<div style="border: 3px dotted green;">Brilantní rámeček</div>
+
+Jednotlivé strany rámečku jdou taky definovat zvlášť přes `border-top` `border-right` `border-bottom` `border-left`.
+
+#### Zobrazení a rozměry
+- `display` určuje typ zobrazení prvku. Zatím se s tímhle pravidlem setkáváme díky výchozím stylům, které definují **blokové prvky** (`display: block;`, třeba `<p>`) a **inline prvky** (`display: inline;`, třeba `<b>`.) Blokové prvky tvoří samostatný "odstavec", inline můžu skládat vedle sebe na řádek. Za zmínku stojí i `display: none;`, kterým prvek úplně skryju.
+- `width` a `height` určuje rozměry prvku. Následující `<div>` má `width: 100px;` a `height: 300px;`:
+
+<div style="width: 100px; height: 300px; border: 1px solid">Odstavec, který zabírá zbytečně hodně výšky a absurdně málo šířky</div>
 
 ## JavaScript
 
