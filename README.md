@@ -28,6 +28,8 @@ Přehled věcí, co jsme zatím probírali (a občas něco navíc).
       - [Rámečky](#rámečky)
       - [Zobrazení a rozměry](#zobrazení-a-rozměry)
   - [JavaScript](#javascript)
+    - [Základní info](#základní-info)
+    - [](#)
   - [Programy a nástroje](#programy-a-nástroje)
     - [DevTools (F12 v prohlížeči)](#devtools-f12-v-prohlížeči)
     - [Visual Studio Code (VSCode)](#visual-studio-code-vscode)
@@ -41,33 +43,27 @@ Přehled věcí, co jsme zatím probírali (a občas něco navíc).
 Webové programovaní se dnes prakticky odehrává ve třech různých jazycích. Každý má svůj účel:
 
 - **HTML** (HyperText Markup Language, soubory s příponou `.html`) je _značkovací jazyk_. Definujeme s ním kostru **dokumentu** (tj. webové stránky). 
-  - Dokument se skládá z jednotlivých **tagů**. Tag vypadá takhle: `<html>`. 
-  - Většina tagů je **párových** (počáteční tag `<html>` musí doplňovat koncový `</html>`), některé jsou ale nepárové.
-  - HTML neurčuje, jak bude dokument vypadat - říká jen "tohle je nadpis", "tohle je obrázek" - značení je **sémantické**. Správně napsané HTML pak umí zpracovat třeba slepecké čtečky.
+  - HTML neurčuje, jak bude dokument vypadat - říká jen "tohle je nadpis", "tohle je obrázek" - značení pomocí tagů je **sémantické**. Správně napsané HTML pak umí zpracovat třeba slepecké čtečky.
   - HTML soubor si prohlížeč "schroustá" do takzvaného **DOM** (Document Object Model). "Texťák" s tagy se tak převede do stromové struktury, která se skládá z jednotlivých **prvků (elements)**. K DOM pak přistupujeme přes další dva jazyky.
 - **CSS** (Cascading Style Sheets, soubory s příponou `.css`) je _stylovací jazyk_. Definujeme s ním, jak bude dokument napsaný v HTML vypadat. 
-  - Jednotlivé prvky vybíráme přes takzvané **selektory**. Prvkům pak určujeme **vlastnosti (properties)**. Sadě selektoru a vlastností se říká **pravidlo**. Pravidlo vypadá takhle:
-    ```
-    html {
-      font-weight: bold;
-    }
-    ```
-  - Jednotlivých vlastností existuje několik stovek a řídí se jimi celý vzhled dokumentu - od tučnosti písma po **layout** - rozvržení stránky, kde bude jaké menu a podobně.
-  - Z historických (tag `<b>` dřív znamenal vzhledové "je to tučně", ne sémantické "na tohle dávám důraz" jako dnes) i praktických (psát pořád dokola stejné základní CSS by byla pruda) důvodů mají prohlížeče pro jednotlivé tagy **výchozí styly**. Proto bude třeba tag `<b>` tučně, i když jsem si na to nenapsal pravidlo. Výchozí styly ale jdou libovolně přepsat vlastními pravidly.
+  - CSS **pravidly** se řídí celý vzhled dokumentu - od jednotlivostí jako tučnost písma po **layout**, tedy celkové rozvržení stránky.
+  - Z historických i praktických důvodů mají prohlížeče pro jednotlivé tagy **výchozí styly**. Proto bude mít dokument základní formátování, i když jsem žádná CSS pravidla nenapsal. Výchozí styly ale jdou libovolně přepsat vlastními pravidly.
 - **JavaScript** (JS, soubory s příponou `.js`). je _programovací jazyk_. Umí stejné věci, co jiné programovaci jazyky - matematiku, práci s daty... Speciální je v tom, že je zabudovaný přímo do webových prohlížečů a můžeme s ním tak přistupovat k DOM a ovládat ho - JavaScript **oživuje webové stránky**.
-  - JavaScript je **imperativní** - to znamená, že v něm píšeme sérii příkazů, které pak prohlížeč odshora dolů chroustá a provádí je. Příkaz vypadá třeba takhle: `const x = 2;`
-  - Pozor, existuje i pořád celkem používaný jazyk Java, ale ten s JavaScriptem vůbec nesouvisí! JavaScript se původně jmenoval LiveScript, ale jeho tvůrci se v 90. letech rozhodli, že ho přejmenují podle tehdy masově populární Javy, což mělo k JavaScriptu nalákat programátory.
-- Jedna z nejdůležitějších schopností při programování je orientace v dokumentaci. Všechny tři jazyky detailně dokumentuje web **[MDN (Mozilla Developer Network)](https://developer.mozilla.org/en-US/docs/Web)**. Ostatní zdroje (třeba W3Schools, které bývají první ve výsledcích na Googlu) jsou občas přívětivější, ale často nepřesné nebo zastaralé.
+
+
+Jedna z nejdůležitějších schopností při programování je orientace v dokumentaci. Všechny tři jazyky detailně dokumentuje web **[MDN (Mozilla Developer Network)](https://developer.mozilla.org/en-US/docs/Web)**. Ostatní zdroje (třeba W3Schools, které bývají první ve výsledcích na Googlu) jsou občas přívětivější, ale často nepřesné nebo zastaralé.
 
 ## HTML
 Historie HTML byla plná mrzení, kdy se nikdo nemohl dohodnout, k čemu HTML vlastně bude, a každý prohlížeč si je zobrazoval jinak, ale na dnes aktuální verzi <b>HTML5</b> z roku 2014 je shoda a podoba HTML se tak naštěstí ustálila. Má i vlastní ošklivé logo:
 
 ![](img/html5logo.png)
 ### Základní pravidla
-- Dokument má **stromovou strukturu**: i pokud bychom zmatlali HTML kód, třeba zapomenutím koncového tagu, a strom by byl rozbitý, prohlížeč ho při tvorbě DOM opraví.
-- Dokument píšeme tak, že jeho obsah obalujeme do sémantických **tagů**. Tagy jsou buď párové, nebo nepárové, a můžou mít **atributy**, které definují další vlastnosti - třeba unikátní ID prvku (to se používá hlavně v JavaScriptu), třídu (ta zase v CSS) nebo nutný doplněk tagu, třeba adresu obrázku pro tag `<img>`. **Hodnota** atributu je vždy ve dvojitých uvozovkách.
+- Dokument píšeme tak, že jeho obsah obalujeme do sémantických **tagů**. Tag vypadá takhle: `<html>`
+- Většina tagů je **párových** (počáteční tag `<html>` musí doplňovat koncový `</html>`), některé jsou ale nepárové.
+- Tagy můžou mít **atributy**, které definují další vlastnosti - třeba unikátní ID prvku (to se používá hlavně v JavaScriptu), třídu (ta zase v CSS) nebo nutný doplněk tagu, třeba adresu obrázku pro tag `<img>`. **Hodnota** atributu je vždy ve dvojitých uvozovkách.
 - Takhle takový tag s atributy vypadá:
   `<img id="main-image" class="full-width" src="img/hlavni.jpg">`
+- Dokument má **stromovou strukturu**: i pokud bychom zmatlali HTML kód, třeba zapomenutím koncového tagu, a strom by byl rozbitý, prohlížeč ho při tvorbě DOM opraví.
 - Do HTML můžu psát taky **komentáře**. Prohlížeč je při sestavování DOM bude ignorovat, takže si do nich můžu psát libovolné poznámky. Můžou být na víc řádků a uvozují se takhle:
   ```
   <!-- jednořádkový komentář -->
@@ -214,10 +210,16 @@ CSS mělo podobně jako HTML komplikovanou historii, než došlo do dnešní ví
 - CSS popisuje **vzhled HTML dokumentu** a skládá se z **pravidel**.
 - Prohlížeče v sobě obsahují nějaká základní **výchozí pravidla**, takže dokument má základní formátování, i pokud žádné CSS nedefinujeme. Například výchozí pravidlo pro `<b>` je tučné písmo. Výchozí pravidla ale můžeme s CSS přepsat.
 - Pravidla jsou **kaskádová**. To znamená, že ve stromu dokumentu "tečou" z nadřazených prvků k podřazeným. Když nastavím třeba nějakému prvku `<div>` s mnoha podřazenými `<p>` velké písmo, budou mít velké písmo i všechny `<p>`.
-- Prvky dokumentu můžu vybírat spoustou způsobů pomocí takzvaných **selektorů**. Selektor vybírá všechny příslušné prvky. Selektorem může být samotný **tag**. Například selektor `p` vybere všechny prvky s tagem `<p>`.
-- Nejčastěji je ale selektorem **třída**, kterou prvku přiřadím v HTML. Selektor třídy začíná tečkou: třeba `.my-awesome-class`, který vybere všechny prvky s touhle třídou: `<p class="my-awesome-class">`, `<h1 class="my-awesome-class">`...
-- K selektorům píšeme bloky **vlastností s hodnotami**, které tím dáváme daným prvkům. (Bloky jsou části kódu ohraničené "chlupatými závorkami" `{}` - jako v JavaScriptu.) Vlastnosti se píšou jako `vlastnost: hodnota;`, s dvojtečkou a středníkem na konci.
-- Pravidlo se tak skládá ze selektoru a bloku vlastností.
+- Prvky dokumentu můžu vybírat spoustou způsobů pomocí takzvaných **selektorů**. Selektor vybírá všechny příslušné prvky. 
+  - Selektorem může být samotný **tag**. Například selektor `p` vybere všechny prvky s tagem `<p>`.
+  - Nejčastěji je ale selektorem **třída**, kterou prvku přiřadím v HTML. Selektor třídy začíná tečkou: třeba `.my-awesome-class`, který vybere všechny prvky s touhle třídou: `<p class="my-awesome-class">`, `<h1 class="my-awesome-class">`...
+- K selektorům píšeme bloky **vlastností (properties) s hodnotami**, které tím dáváme daným prvkům. (Bloky jsou části kódu ohraničené "chlupatými závorkami" `{}` - jako v JavaScriptu.) Vlastnosti se píšou jako `vlastnost: hodnota;`, s dvojtečkou a středníkem na konci.
+- <b>Pravidlo</b> se tak skládá ze selektoru a bloku vlastností. Vypadá takhle:
+    ```
+    html {
+      font-weight: bold;
+    }
+    ```
 - I v CSS se můžou psát **komentáře**, takhle: `/* komentář */`. Ve VSCode můžu vložit komentářové znaky přes `Alt+Shift+A`.
 
 
@@ -332,6 +334,28 @@ Jednotlivé strany rámečku jdou taky definovat zvlášť přes `border-top` `b
 <div style="width: 100px; height: 300px; border: 1px solid">Odstavec, který zabírá zbytečně hodně výšky a absurdně málo šířky</div>
 
 ## JavaScript
+Na rozdíl od HTML a CSS je JavaScript skutečný **programovací jazyk**. Je odvozený od stařičkého jazyka C, ve kterém je napsaný třeba Windows. První verze vznikla v roce 1995 hodně narychlo, což je na některých otravnějších vlastnostech JavaScriptu poznat. Časem se ale jazyk hodně posunul a postupně přibyla spousta vychytávek pro pohodlnější programování. Má oficiální specifikaci jménem ECMAScript, které se prohlížeče drží - každý rok do ní přibývají novinky a ta poslední je **ECMAScript 2020**.
+
+Pozor, existuje i pořád celkem používaný jazyk Java, ale ten s JavaScriptem vůbec nesouvisí! JavaScript se původně jmenoval LiveScript, ale jeho tvůrci se v 90. letech rozhodli, že ho přejmenují podle tehdy masově populární Javy, což mělo k JavaScriptu nalákat programátory.
+
+### Základní info
+- Ke spuštění JavaScriptu potřebujeme takzvaný **engine**, který vykonává příkazy v kódu. Engine má v sobě zabudovaný každý prohlížeč. Dnes už enginy existují i samostatně (to znamená, že v JS jdou psát i normální "newebové" programy), ale pro zjednodušení se budeme držet toho, že JS zpracovává prohlížeč.
+- JavaScript je **imperativní** - to znamená, že v něm píšeme sérii příkazů, které pak prohlížeč odshora dolů chroustá a provádí je. Příkaz vypadá třeba takhle: `const x = 2;`
+- Základní principy jsou stejné jako při programování obecně:
+  - Data - naše vlastní nebo třeba vstup od uživatele - si držíme v **proměnných**.
+  - Data zpracováváme pomocí **funkcí** - buď vestavěných, nebo těch, které si sami napíšeme.
+- JavaScript je ale unikátní v tom, že může přistupovat k **DOM** (tedy zpracovanému HTML dokumentu). Můžeme pomocí něj vybírat prvky a měnit je - například jim přiřazovat **eventy**, takže budou reagovat na uživatele, třeba tlačítko na kliknutí.
+- Do kódu můžeme psát **komentáře**, jedním ze dvou způsobů:
+  ```
+  // jednořádkový komentář
+  /*
+    komentář na víc řádků!
+    jupí!
+  */
+  ```
+  VSCode mi komentářové znaky automaticky vloží zkratkou `Alt+Shift+A`.
+
+### 
 
 ## Programy a nástroje
 V praxi se pro psaní kódu i jeho spouštění používá bambilion různých programů a nástrojů. S čím jsme se zatím potkali:
@@ -357,7 +381,7 @@ Systém na **verzování** - správu verzí programu (ale i čehokoliv jiného).
 * Tím jsem změny uložil do svého repozitáře. V dolní liště vedle popisku "main" je pak ikonka, kde bude `↑ 1`, tzn. mám jeden commit k odeslání - **pushnutí** - do vzdáleného repozitáře (tj. na GitHubu). Když na ni kliknu, commit se pushne (a nám se i brzy publikuje na webu).
 
 ### node.js
-JavaScript původně vznikl jako jazyk čistě pro prohlížeče. Pak se ale stalo, že ho uměli všichni a chtěli ho začít používat i jinde - pro programy, co běží přímo na počítači. Proto vznikl  **node.js** (nebo jen Node), který přesně tohle umožňuje. My ho používáme hlavně kvůli **NPM**:
+JavaScript původně vznikl jako jazyk čistě pro prohlížeče. Pak se ale stalo, že ho uměli všichni a chtěli ho začít používat i jinde - pro programy, co běží přímo na počítači. Proto vznikl engine **node.js** (nebo jen Node), který přesně tohle umožňuje. My ho používáme hlavně kvůli **NPM**:
 
 #### NPM
 Zkratka z _Node Package Manager_. Je to databáze **knihoven** - "nesamostatných" programů, které můžu přidávat do svého repozitáře a které dělají různé věci. Může to být třeba knihovna na kombinatorické výpočty, knihovna, která dokáže ze vstupních dat dělat grafy, ale i různé pomocné knihovny, které programátorům usnadňují život.
