@@ -29,7 +29,12 @@ Přehled věcí, co jsme zatím probírali (a občas něco navíc).
       - [Zobrazení a rozměry](#zobrazení-a-rozměry)
   - [JavaScript](#javascript)
     - [Základní info](#základní-info)
-    - [](#)
+    - [Praktická ukázka](#praktická-ukázka)
+    - [Proměnné: `let`, `const`](#proměnné-let-const)
+    - [Datové typy: string, number](#datové-typy-string-number)
+    - [Operátory](#operátory)
+    - [Podmínky: `if`, `else if`, `else`](#podmínky-if-else-if-else)
+    - [Cykly: `for`, `while`](#cykly-for-while)
   - [Programy a nástroje](#programy-a-nástroje)
     - [DevTools (F12 v prohlížeči)](#devtools-f12-v-prohlížeči)
     - [Visual Studio Code (VSCode)](#visual-studio-code-vscode)
@@ -339,12 +344,14 @@ Na rozdíl od HTML a CSS je JavaScript skutečný **programovací jazyk**. Je od
 Pozor, existuje i pořád celkem používaný jazyk Java, ale ten s JavaScriptem vůbec nesouvisí! JavaScript se původně jmenoval LiveScript, ale jeho tvůrci se v 90. letech rozhodli, že ho přejmenují podle tehdy masově populární Javy, což mělo k JavaScriptu nalákat programátory.
 
 ### Základní info
+- JavaScript píšeme nejčastěji do samostatného souboru, který pak propojíme s HTML dokumentem tagem `<script>` (viz výše).
 - Ke spuštění JavaScriptu potřebujeme takzvaný **engine**, který vykonává příkazy v kódu. Engine má v sobě zabudovaný každý prohlížeč. Dnes už enginy existují i samostatně (to znamená, že v JS jdou psát i normální "newebové" programy), ale pro zjednodušení se budeme držet toho, že JS zpracovává prohlížeč.
 - JavaScript je **imperativní** - to znamená, že v něm píšeme sérii příkazů, které pak prohlížeč odshora dolů chroustá a provádí je. Příkaz vypadá třeba takhle: `const x = 2;`
 - Základní principy jsou stejné jako při programování obecně:
   - Data - naše vlastní nebo třeba vstup od uživatele - si držíme v **proměnných**.
-  - Data zpracováváme pomocí **funkcí** - buď vestavěných, nebo těch, které si sami napíšeme.
-- JavaScript je ale unikátní v tom, že může přistupovat k **DOM** (tedy zpracovanému HTML dokumentu). Můžeme pomocí něj vybírat prvky a měnit je - například jim přiřazovat **eventy**, takže budou reagovat na uživatele, třeba tlačítko na kliknutí.
+  - Data zpracováváme pomocí **funkcí** - buď vestavěných, tedy těch, které nám jazyk nabízí v základu, nebo těch, které si sami napíšeme.
+- JavaScript je ale unikátní v tom, že může přistupovat k **DOM** (tedy zpracovanému HTML dokumentu).   
+  - Můžeme pomocí něj vybírat prvky (nejčastěji pomocí **ID**) a měnit je - například jim přiřazovat **eventy**, takže budou reagovat na uživatele, třeba tlačítko na kliknutí.
 - Do kódu můžeme psát **komentáře**, jedním ze dvou způsobů:
   ```
   // jednořádkový komentář
@@ -355,7 +362,54 @@ Pozor, existuje i pořád celkem používaný jazyk Java, ale ten s JavaScriptem
   ```
   VSCode mi komentářové znaky automaticky vloží zkratkou `Alt+Shift+A`.
 
-### 
+### Praktická ukázka
+
+Můžeme si do HTML souboru přidat
+`<p id="shopping-decider"></p>`
+
+a propojit ho s JS souborem s obsahem:
+```
+const paragraph = document.getElementById("shopping-decider");
+const randomNumber = Math.random();
+
+let shouldIGoShopping;
+
+if (randomNumber < 0.5) {
+  shouldIGoShopping = "Ne!";
+} else {
+  shouldIGoShopping = "Ano!";
+} 
+
+paragraph.innerHTML = "Mám dnes jít nakoupit? " + shouldIGoShopping;
+```
+
+Pak se nám s 50procentní pravděpodobností ukáže odstavec _Mám dnes jít nakoupit? Ne!_, jinak _Mám dnes jít nakoupit? Ano!_.
+
+Popořadě:
+- `const paragraph = hodnota;` je **přiřazení do proměnné**, kterou jsme si pojmenovali `paragraph`. `const` znamená, že proměnnou není možné přepsat jinou.
+- `document.getElementById();` je **vestavěná funkce**, která nám umožňuje vybrat prvek z DOM podle ID, které jsme mu nastavili. Do funkce píšeme v uvozovkách její jediný **parametr** `"shopping-decider"`, tedy ID našeho odstavce.
+- `const paragraph = document.getElementById("shopping-decider");` tedy do proměnné `paragraph` přiřadí výsledek funkce `document.getElementById("shopping-decider");`, kterým bude náš odstavec.
+- `Math.random();` je další vestavěná funkce, která vygeneruje náhodné desetinné číslo od 0 do 0,999.... My je přiřazujeme proměnné `randomNumber`.
+- `let shouldIGoShopping;` nám **vytvoří prázdnou proměnnou**. Použití `let` znamená, že ji můžeme dál přepisovat (prázdnou `const` ani vytvořit nejde).
+- `if (podmínka) { příkazy }` je **podmínka** - touhle říkáme, že pokud je naše `randomNumber` menší než 0,5, provedou se příkazy v následujícím bloku (blok ohraničují chlupaté závorky). Navazujícím `else { příkazy }` pak říkáme, co se stane, když podmínka nebude platit - tedy pokud je `randomNumber` rovné nebo větší 0,5.
+- `shouldIGoShopping = "Ne!";` je **přepsání existující proměnné**, proto se už na začátek nepíše `let`. Do `const` by přiřazení nebylo možné, program by skončil chybou.
+- Naše proměnná `paragraph` má různé **vlastnosti**, které popisují vybraný prvek v DOM. Přistupujeme k nim zápisem `proměnná.vlastnost`. Jednou z vlastností je ``innerHTML``: je v ní zapsaný celý HTML kód daného prvku. Ten je teď prázdný (do našeho `<p>` jsme v HTML dokumentu nic nenapsali), ale přiřazením do `paragraph.innerHTML` ho vyplníme.
+  - `"Mám jít dnes nakoupit? " + shouldIGoShopping;` "slepí" text v první půlce s obsahem proměnné v druhé půlce.
+
+
+<!-- 
+### Vkládání JavaScriptu do HTML
+--> 
+
+### Proměnné: `let`, `const`
+
+### Datové typy: string, number
+
+### Operátory
+
+### Podmínky: `if`, `else if`, `else`
+
+### Cykly: `for`, `while`
 
 ## Programy a nástroje
 V praxi se pro psaní kódu i jeho spouštění používá bambilion různých programů a nástrojů. S čím jsme se zatím potkali:
